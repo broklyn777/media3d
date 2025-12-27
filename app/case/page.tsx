@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cases } from "@/content/cases";
 import {
   Card,
   CardHeader,
@@ -24,40 +25,36 @@ export default function CasePage() {
       </p>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>FL Studio Guide</CardTitle>
-            <CardDescription>
-              Mini-guide + hub med workflow, övningar och resurser
-            </CardDescription>
-          </CardHeader>
+        {cases.map((c) => (
+          <Card key={c.slug}>
+            <CardHeader>
+              <CardTitle>{c.title}</CardTitle>
+              <CardDescription>{c.subtitle}</CardDescription>
+            </CardHeader>
 
-          <CardContent className="space-y-4">
-            <p className="text-sm text-fg/75">
-              Ett content-drivet projekt med tydlig struktur och undersidor.
-              Fokus på enkel navigering, snabb laddning och en grund som är lätt
-              att bygga ut.
-            </p>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-fg/75">{c.excerpt}</p>
 
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href="https://start-pkt.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
-              >
-                Besök sajten →
-              </a>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a
+                  href={c.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+                >
+                  Besök sajten →
+                </a>
 
-              <Link
-                href="/case/start-pkt"
-                className="inline-flex items-center rounded-xl border border-fg/15 px-4 py-2 text-sm font-medium text-fg hover:bg-fg/5"
-              >
-                Teknisk översikt →
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+                <Link
+                  href={`/case/${c.slug}`}
+                  className="inline-flex items-center rounded-xl border border-fg/15 px-4 py-2 text-sm font-medium text-fg hover:bg-fg/5"
+                >
+                  Teknisk översikt →
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
