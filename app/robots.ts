@@ -1,7 +1,9 @@
+
 import type { MetadataRoute } from "next";
 
-// ✅ Ändra till er riktiga domän
-const siteUrl = "https://media3d.se";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://media3d.vercel.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,8 +11,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // blocka interna/oviktiga paths om ni har såna:
-        disallow: ["/api/", "/_next/"],
+        // OK att blocka API om du vill
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
