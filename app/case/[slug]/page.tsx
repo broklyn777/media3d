@@ -6,7 +6,7 @@ import { cases, getCaseBySlug } from "@/content/cases";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://media3d.example";
+  "https://media3d.vercel.app";
 
 export function generateStaticParams() {
   return cases.map((c) => ({ slug: c.slug }));
@@ -15,10 +15,9 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const c = getCaseBySlug(slug);
+  const c = getCaseBySlug(params.slug);
 
   if (!c) {
     return {
@@ -28,8 +27,10 @@ export async function generateMetadata({
   }
 
   const pageUrl = `${SITE_URL}/case/${c.slug}`;
+  const ogUrl = c.ogImage ? `${SITE_URL}${c.ogImage}` : undefined;
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: `${c.title} – teknisk översikt`,
     description: c.excerpt,
     alternates: { canonical: pageUrl },
@@ -38,15 +39,15 @@ export async function generateMetadata({
       description: c.excerpt,
       type: "article",
       url: pageUrl,
-      images: c.ogImage
-        ? [{ url: c.ogImage, width: 1200, height: 630, alt: c.title }]
+      images: ogUrl
+        ? [{ url: ogUrl, width: 1200, height: 630, alt: c.title }]
         : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: `${c.title} – teknisk översikt | Media3d`,
       description: c.excerpt,
-      images: c.ogImage ? [c.ogImage] : undefined,
+      images: ogUrl ? [ogUrl] : undefined,
     },
   };
 }
