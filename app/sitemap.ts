@@ -6,6 +6,8 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
   "https://media3d.vercel.app";
 
+
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 

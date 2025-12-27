@@ -15,9 +15,10 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const c = getCaseBySlug(params.slug);
+  const { slug } = await params;
+  const c = getCaseBySlug(slug);
 
   if (!c) {
     return {
@@ -30,7 +31,6 @@ export async function generateMetadata({
   const ogUrl = c.ogImage ? `${SITE_URL}${c.ogImage}` : undefined;
 
   return {
-    metadataBase: new URL(SITE_URL),
     title: `${c.title} – teknisk översikt`,
     description: c.excerpt,
     alternates: { canonical: pageUrl },
