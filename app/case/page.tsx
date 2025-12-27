@@ -10,11 +10,36 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-export const metadata: Metadata = {
-  title: "Case | Media3d",
-  description:
-    "Projekt och exempel på hur Media3d bygger design och SEO i praktiken.",
-};
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://media3d.vercel.app";
+
+export function generateMetadata(): Metadata {
+  const title = "Case – tekniska översikter & projekt";
+  const description =
+    "Projekt och exempel på hur Media3d bygger struktur, design och teknik i praktiken.";
+
+  const pageUrl = `${SITE_URL}/case`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title: `${title} | Media3d`,
+      description,
+      url: pageUrl,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Media3d`,
+      description,
+    },
+  };
+}
 
 export default function CasePage() {
   return (
