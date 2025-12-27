@@ -1,65 +1,172 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
-export default function Home() {
+const SITE_URL = "https://media3d.example"; // byt sen
+
+export const metadata: Metadata = {
+  title: "Media3d – Webbdesign & utveckling",
+  description:
+    "Media3d bygger snabba, eleganta webbplatser med fokus på design, SEO och prestanda.",
+  openGraph: {
+    title: "Media3d – Webbdesign & utveckling",
+    description:
+      "Snabba, eleganta webbplatser med fokus på design, SEO och prestanda.",
+    type: "website",
+    url: SITE_URL,
+  },
+};
+
+export default function Page() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Media3d",
+      url: SITE_URL,
+      email: "hej@media3d.se",
+      sameAs: [], // lägg sociala länkar senare
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Media3d",
+      url: SITE_URL,
+      inLanguage: "sv-SE",
+      publisher: {
+        "@type": "Organization",
+        name: "Media3d",
+        url: SITE_URL,
+      },
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* HERO */}
+      <section className="mx-auto max-w-6xl px-6 py-14 md:py-20">
+        <p className="inline-flex items-center rounded-full border border-fg/10 bg-bg/60 px-3 py-1 text-xs text-fg/70">
+          Media3d • Webbutveckling & design
+        </p>
+
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+          Vi bygger snabba, eleganta webbplatser som konverterar.
+        </h1>
+
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-fg/75">
+          Media3d hjälper företag med design, utveckling och innehåll. Tydlig
+          process, stabilt UI och fokus på prestanda.
+        </p>
+
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Button size="lg">Boka möte</Button>
+          <Link
+            href="/case"
+            className="inline-flex items-center rounded-xl border border-fg/15 px-5 py-3 text-sm font-medium text-fg hover:bg-fg/5"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Se case →
+          </Link>
+          <Link
+            href="/kontakt"
+            className="inline-flex items-center rounded-xl bg-primary/8 px-4 py-3 text-sm font-medium text-primary hover:bg-primary/12"
           >
-            Documentation
-          </a>
+            Kontakta oss →
+          </Link>
         </div>
-      </main>
+
+        <div className="mt-8 flex flex-wrap gap-4 text-sm text-fg/70">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span>Designsystem & UI</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span>SEO & prestanda</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span>Next.js & skalbar kodbas</span>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        <div className="grid gap-6 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>Webbdesign</CardTitle>
+              <CardDescription>Struktur, typografi och känsla.</CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm text-fg/75">
+              Genomtänkta grids, tydlig hierarki och ett uttryck som känns
+              premium utan att bli trendigt.
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Utveckling</CardTitle>
+              <CardDescription>Snabbt, stabilt, skalbart.</CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm text-fg/75">
+              Next.js + komponentbaserat UI. Du får en kodbas som är lätt att
+              vidareutveckla och underhålla.
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Innehåll & SEO</CardTitle>
+              <CardDescription>Synlighet och konvertering.</CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm text-fg/75">
+              Teknisk SEO, struktur och copy som gör att du laddar snabbt och
+              blir lättare att hitta.
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="rounded-2xl border border-fg/10 bg-primary/8 p-8">
+          <div className="max-w-2xl">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Vill du ha en snygg och snabb webbplats?
+            </h2>
+            <p className="mt-2 text-fg/75">
+              Berätta kort vad du behöver, så återkommer vi med ett upplägg.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+              >
+                Kontakta Media3d →
+              </Link>
+              <Link
+                href="/fargsystem"
+                className="inline-flex items-center rounded-xl border border-fg/15 px-4 py-2 text-sm font-medium text-fg hover:bg-fg/5"
+              >
+                Se tokens →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
