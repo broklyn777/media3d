@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { cases } from "@/content/cases";
 import {
   Card,
@@ -26,16 +27,33 @@ export default function CasePage() {
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {cases.map((c) => (
-          <Card key={c.slug}>
-            <CardHeader>
+          <Card key={c.slug} className="h-full overflow-hidden flex flex-col">
+            {c.coverImage ? (
+              <div className="border-b border-fg/10">
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
+                  <Image
+                    src={c.coverImage}
+                    alt={c.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    priority={c.slug === "fl-studio-guide"}
+                  />
+                </div>
+              </div>
+            ) : null}
+
+            <CardHeader className="space-y-2">
               <CardTitle>{c.title}</CardTitle>
-              <CardDescription>{c.subtitle}</CardDescription>
+              <CardDescription className="text-fg/70 line-clamp-2">
+                {c.subtitle}
+              </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-4">
-              <p className="text-sm text-fg/75">{c.excerpt}</p>
+            <CardContent className="flex flex-1 flex-col gap-4">
+              <p className="text-sm text-fg/75 line-clamp-3">{c.excerpt}</p>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="mt-auto flex flex-wrap gap-3 pt-2">
                 <a
                   href={c.externalUrl}
                   target="_blank"
